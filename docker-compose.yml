@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  koboldcpp:
+    build: ./
+    ports:
+      - target: 5001
+        published: 5001
+        protocol: tcp
+        mode: host
+    environment:
+      LAUNCH_COMMAND: python koboldcpp.py --threads 4 --smartcontext --unbantokens
+      MODEL: models/metharme.bin
+    # Add custom models downloaded externally
+    volumes:
+      - ./models/Metharme-7b-4bit-Q4_1-GGML-V2.bin:/workspace/models/metharme.bin
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "15360M"
+          
